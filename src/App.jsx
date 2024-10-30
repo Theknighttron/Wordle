@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import "./App.css";
+import Line from "./components/Line";
 
 function App() {
   const [solutions, setSolutions] = useState("");
+  const [guesses, setGuesses] = useState(Array(6).fill(null));
   // Fetch data on mounts
 
   useEffect(() => {
@@ -18,7 +20,9 @@ function App() {
   }, []);
   return (
     <>
-      <h1>RANDOM WORD: {solutions}</h1>
+      {guesses.map((guess, index) => {
+        return <Line key={index} guess={guess} />;
+      })}
     </>
   );
 }
