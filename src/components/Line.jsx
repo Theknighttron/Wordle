@@ -12,7 +12,7 @@ export default function Line(guess = " ") {
   }
   return (
     <>
-      <div className="tile">{tiles}</div>
+      <div className="line">{tiles}</div>
     </>
   );
 }

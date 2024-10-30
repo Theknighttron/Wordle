@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import "./App.css";
 import Line from "./components/Line";
 
 function App() {
@@ -19,11 +18,12 @@ function App() {
     fetchWord();
   }, []);
   return (
-    <>
+    <div className="board flex items-center justify-center bg-sky-50">
+      <h1 className="text-red-50">Hi</h1>
       {guesses.map((guess, index) => {
         return <Line key={index} guess={guess} />;
       })}
-    </>
+    </div>
   );
 }
 
