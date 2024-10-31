@@ -40,7 +40,7 @@ function App() {
 
     window.addEventListener("keydown", handleType);
     return () => window.removeEventListener("keydown", handleType);
-  }, [currentGuess, IsGameOver, solution]);
+  }, [currentGuess, IsGameOver, solution, guesses]);
 
   // Fetch data on mounts
   useEffect(() => {

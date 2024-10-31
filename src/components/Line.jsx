@@ -7,6 +7,7 @@ export default function Line({ guess, isFinal, solution }) {
     let className = "tile";
 
     if (isFinal) {
+      console.log(solution);
       if (char === solution[i]) {
         className += " correct";
       } else if (solution.includes(char)) {
