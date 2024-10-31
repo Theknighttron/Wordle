@@ -2,12 +2,31 @@ import { useEffect, useState } from "react";
 import Line from "./components/Line";
 
 function App() {
-  const [solutions, setSolutions] = useState("");
+  const [solution, setSolutions] = useState("");
   const [guesses, setGuesses] = useState(Array(6).fill(null));
   const [currentGuess, setCurrentGuess] = useState("");
+  const [IsGameOver, setIsGameOver] = useState(false);
 
   useEffect(() => {
     const handleType = (event) => {
+      if (IsGameOver) {
+        return;
+      }
+      if (event.key == "Enter") {
+        if (currentGuess.length != 5) {
+          return;
+        }
+
+        const newGuesses = [...guesses];
+        newGuesses[guesses.findIndex((val) => val == null)] = currentGuess;
+        setGuesses(newGuesses);
+        setCurrentGuess("");
+
+        const isCorrect = solution === currentGuess;
+        if (isCorrect) {
+          setIsGameOver(true);
+        }
+      }
       if (event.key === "Backspace") {
         setCurrentGuess((prev) => prev.slice(0, -1));
         return;
@@ -21,7 +40,7 @@ function App() {
 
     window.addEventListener("keydown", handleType);
     return () => window.removeEventListener("keydown", handleType);
-  }, [currentGuess]);
+  }, [currentGuess, IsGameOver, solution]);
 
   // Fetch data on mounts
   useEffect(() => {
@@ -44,6 +63,8 @@ function App() {
           <Line
             key={index}
             guess={isCurrentGuess ? currentGuess : (guess ?? "")}
+            isFinal={!isCurrentGuess && guess != null}
+            solution={solution}
           />
         );
       })}
