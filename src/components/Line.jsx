@@ -1,6 +1,7 @@
 const WORD_LENGTH = 5;
 
-export default function Line(guess = " ") {
+export default function Line({ guess }) {
+  console.log(guess);
   const tiles = [];
   for (let i = 0; i < WORD_LENGTH; i++) {
     const char = guess[i] || "";

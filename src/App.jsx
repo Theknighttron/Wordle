@@ -4,8 +4,26 @@ import Line from "./components/Line";
 function App() {
   const [solutions, setSolutions] = useState("");
   const [guesses, setGuesses] = useState(Array(6).fill(null));
-  // Fetch data on mounts
+  const [currentGuess, setCurrentGuess] = useState("");
 
+  useEffect(() => {
+    const handleType = (event) => {
+      if (event.key === "Backspace") {
+        setCurrentGuess((prev) => prev.slice(0, -1));
+        return;
+      }
+
+      if (currentGuess.length >= 5) return;
+      if (event.key.match(/^[a-zA-Z]$/)) {
+        setCurrentGuess((prev) => prev + event.key.toLowerCase());
+      }
+    };
+
+    window.addEventListener("keydown", handleType);
+    return () => window.removeEventListener("keydown", handleType);
+  }, [currentGuess]);
+
+  // Fetch data on mounts
   useEffect(() => {
     const fetchWord = async () => {
       const response = await fetch("/wordle-words");
@@ -18,10 +36,16 @@ function App() {
     fetchWord();
   }, []);
   return (
-    <div className="board flex items-center justify-center bg-sky-50">
-      <h1 className="text-red-50">Hi</h1>
+    <div className="board">
       {guesses.map((guess, index) => {
-        return <Line key={index} guess={guess} />;
+        const isCurrentGuess =
+          index === guesses.findIndex((val) => val === null);
+        return (
+          <Line
+            key={index}
+            guess={isCurrentGuess ? currentGuess : (guess ?? "")}
+          />
+        );
       })}
     </div>
   );
