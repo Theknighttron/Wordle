@@ -49,7 +49,7 @@ function App() {
       const words = await response.json();
       const rand = Math.floor(Math.random() * words.length);
       const randomWord = words[rand];
-      setSolutions(randomWord);
+      setSolutions(randomWord.toLowerCase());
     };
 
     fetchWord();
